@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from warehouses.views import home
+from warehouses.views import home, Category_list,Category_detail
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("home/",home)
+    path("home/",home),
+    path('warehouses/',Category_list,name='Category_list'),
+    path('warehouses/<int:Category_id>/',Category_detail,name='Category_detail')
 ]

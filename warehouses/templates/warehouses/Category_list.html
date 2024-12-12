@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Warehouses category</title>
+</head>
+<body>
+    <ul>
+        {% for i in warehouses %}
+           <li>
+               {{ i.pk }}-{{i.title}}
+           </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
