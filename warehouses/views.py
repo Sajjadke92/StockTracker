@@ -11,7 +11,8 @@ def Category_list(request):
 
 def Category_detail(request,Category_id):
     warehouses = Category.objects.get(pk=Category_id)
-    context = {'warehouses':warehouses}
+    items = Item.objects.filter(Category = warehouses)
+    context = {'warehouses':warehouses,'items':items}
     return render(request,'warehouses/Category_detail.html',context=context)
 
 

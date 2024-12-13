@@ -7,6 +7,14 @@
 <body>
     <h1>{{warehouses.title}}</h1>
     <p>{{warehouses.description}}</p>
+    <ul>
+        {% for i in items %}
+        <li>
+            {{i.name}},  Quantity:{{i.quantity}},  Location:{{i.location}},  Exp:{{i.expiry}}
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="/warehouses/"> Back </a>
 
 </body>
 </html>

@@ -8,7 +8,7 @@
     <ul>
         {% for i in warehouses %}
            <li>
-               {{ i.pk }}-{{i.title}}
+               <a href="/warehouses/{{i.pk}}/">{{ i.pk }}-{{i.title}}</a>
            </li>
         {% endfor %}
     </ul>
