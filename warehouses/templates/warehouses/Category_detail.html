@@ -6,11 +6,11 @@
 </head>
 <body>
     <h1>{{warehouses.title}}</h1>
-    <p>{{warehouses.description}}</p>
+    <p><h3>Description:</h3>{{warehouses.description}}</p>
     <ul>
         {% for i in items %}
         <li>
-            {{i.name}},  Quantity:{{i.quantity}},  Location:{{i.location}},  Exp:{{i.expiry}}
+            <strong style="font-size: large;">{{i.name}}</strong>,  Quantity:{{i.quantity}},  Location:{{i.location}},  Exp:{{i.expiry}}
         </li>
         {% endfor %}
     </ul>
