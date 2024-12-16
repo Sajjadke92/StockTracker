@@ -17,11 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from warehouses.views import home, Category_list,Category_detail,Category_create
+
+
+from warehouses.views import home,Category_detail,Category_create,category_list_view
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("home/",home),
     path('warehouses/create/',Category_create, name='Category_create'),
-    path('warehouses/',Category_list,name='Category_list'),
+    path('warehouses/',category_list_view,name='Category_list'),
     path('warehouses/<int:Category_id>/',Category_detail,name='Category_detail')
 ]
