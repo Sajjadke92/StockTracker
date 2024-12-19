@@ -19,13 +19,15 @@ from django.urls import path
 
 
 
-from warehouses.views import home,Category_detail,Category_create,category_list_view
+from warehouses.views import home,Category_detail,Category_create,category_list_view,Add_item,Item_chart
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("home/",home),
+    path("",home),
     path('warehouses/create/',Category_create, name='Category_create'),
     path('warehouses/',category_list_view,name='Category_list'),
-    path('warehouses/<int:Category_id>/',Category_detail,name='Category_detail')
+    path('warehouses/<int:Category_id>/',Category_detail,name='Category_detail'),
+    path('warehouses/<int:Category_id>/Add_Item/',Add_item,name='Add_Item'),
+    path('warehouses/Item_chart/',Item_chart,name='item_chart'),
 ]

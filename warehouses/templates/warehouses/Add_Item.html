@@ -1,16 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create new category</title>
-    <h1>Create new category in warehouses</h1>
+    <title>Add new Item</title>
+    
 </head>
 <body>
-    <form action="/warehouses/create/" method="post">
+    <h1>Add new Item to {{category.name}}</h1>
+    <form  method="post">
         {% csrf_token %}
         {{form.as_p}}
         <input type="submit" value="save">
     </form>
-    <a href="/warehouses/"> Back </a>
+    <a href="/warehouses/{{category.id}}/" > Back </a>
 </body>
 </html>

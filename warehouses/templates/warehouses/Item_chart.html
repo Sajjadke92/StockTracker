@@ -1,30 +1,21 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>{{warehouses.title}} detail</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Item Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js -->
 </head>
 <body>
-    <h1>{{warehouses.title}}</h1>
-    <p><h3>Description:</h3>{{warehouses.description}}</p>
-    <ul>
-        {% for i in items %}
-        <li>
-            <strong style="font-size: large;">{{i.name}}</strong>,  Quantity:{{i.quantity}},  Location:{{i.location}},  Exp:{{i.expiry}}
-        </li>
-        {% endfor %}
-    </ul>
-    <div style="width: 600px; height: 400px; margin: auto;">
-        <canvas id="itemChart"></canvas>
-    </div>
+    <h1>Item Quantities</h1>
+    <canvas id="itemChart" width="400" height="200"></canvas> <!-- Chart Container -->
 
     <script>
+        // Data passed from Django context
         const labels = {{ labels|safe }};  // Safe to prevent escaping
         const quantities = {{ quantities|safe }};
 
-         // Determine bar colors based on quantity
-         const barColors = quantities.map(quantity => {
+        // Determine bar colors based on quantity
+        const barColors = quantities.map(quantity => {
             if (quantity < 3) {
               return 'rgba(255, 0, 0, 0.6)'; // Red for low stock
             } else if (quantity >= 3 && quantity <= 10) {
@@ -34,8 +25,8 @@
             }
         });
 
-
-        const myChart = new Chart(itemChart, {
+        // Create the chart
+        const myChart = new Chart("itemChart", {
             type: 'bar',  // Bar chart
             data: {
                 labels: labels,  // X-axis labels
@@ -56,8 +47,5 @@
             }
         });
     </script>
-    <a href="/warehouses/"> Back </a><br>
-    <a href="/warehouses/{{warehouses.id}}/Add_Item/"> Add new item </a>
-
 </body>
 </html>
