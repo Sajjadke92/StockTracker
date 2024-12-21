@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Item</title>
+</head>
+<body>
+    <h1>Update Item:{{item.name}}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Changes</button>
+    </form>
+    <a href="/warehouses/{{ item.Category.id }}/">Back to Category</a>
+</body>
+</html>

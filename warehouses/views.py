@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseRedirect,HttpResponseNotFound,HttpRequest
+from django.shortcuts import render,redirect,get_object_or_404
+from django.http import HttpResponseRedirect,HttpResponseNotFound,HttpRequest
 
 from .models import Category,Item
 from .forms import CategoryForm,ItemForm
@@ -81,6 +81,27 @@ def Item_chart(request):
     
     return render(request,'warehouses/Item_chart.html',context=context)
 
+def update_item(request,Category_id, Item_id):
+    item = get_object_or_404(Item, id=Item_id, Category_id=Category_id)
+
+    if request.method == 'POST':
+        form = ItemForm(request.POST, instance =item)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(f'/warehouses/{item.Category.pk}')
+    else:
+        form = ItemForm(instance = item)
+
+    return render(request,'warehouses/update_item.html',{'form':form, 'item':item})    
+
+def delete_item(request, Category_id, Item_id):
+    item = get_object_or_404(Item, id=Item_id, Category_id=Category_id)
+
+    if request.method == "POST":
+        item.delete()
+        return redirect('Category_detail', Category_id=Category_id)
+
+    return render(request, 'warehouses/confirm_delete.html', {'item': item, 'Category_id': Category_id})
 
 def home(request):
     #return HttpResponse('<h1> welcome to StockTracker </h1>')
