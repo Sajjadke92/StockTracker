@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect,HttpResponseNotFound,HttpRequest
-
+from django.core.mail import send_mail
 from .models import Category,Item
 from .forms import CategoryForm,ItemForm
 
@@ -87,7 +87,10 @@ def update_item(request,Category_id, Item_id):
     if request.method == 'POST':
         form = ItemForm(request.POST, instance =item)
         if form.is_valid():
-            form.save()
+            updated_item = form.save()
+            # Check if the quantity is below the threshold
+            if updated_item.quantity< 5:
+                send_notification(updated_item)
             return HttpResponseRedirect(f'/warehouses/{item.Category.pk}')
     else:
         form = ItemForm(instance = item)
@@ -106,3 +109,11 @@ def delete_item(request, Category_id, Item_id):
 def home(request):
     #return HttpResponse('<h1> welcome to StockTracker </h1>')
     return render(request,'warehouses/home.html' )
+
+def send_notification(item):
+    subject = f"Low Stock Alert: {item.name}"
+    message = f"The stock for item '{item.name}' is below the threshold. Current quantity: {item.quantity}."
+    from_email = 'django@mailtrap.club'
+    recipient_list = ['test.mailtrap1234@gmail.com']  # Add the recipient email here
+
+    send_mail(subject, message, from_email, recipient_list)
