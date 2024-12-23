@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expiry Check</title>
+    
+</head>
+<body>
+    <h1>Items expiring within a Month</h1>
+    {% if expiring_items %}
+        <ul>
+            {% for item in expiring_items %}
+                <li>
+                    <strong>{{ item.name }}</strong>: Expiring on {{ item.expiry }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No items are expiring within the next month.</p>
+    {% endif %}
+    <a href="/warehouses/">Back to Warehouses</a>
+</body>
+</html>

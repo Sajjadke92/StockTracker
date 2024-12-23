@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect,HttpResponseNotFound,HttpRequest
 from django.core.mail import send_mail
+from django.utils.timezone import now
+from datetime import timedelta
 from .models import Category,Item
 from .forms import CategoryForm,ItemForm
 
@@ -117,3 +119,11 @@ def send_notification(item):
     recipient_list = ['test.mailtrap1234@gmail.com']  # Add the recipient email here
 
     send_mail(subject, message, from_email, recipient_list)
+
+def expiry_check(request):
+    # Calculate the date one month from now
+    one_month_later = now().date()+timedelta(days=30)
+    # Filter items with expiry date less than one month away
+    expiring_items = Item.objects.filter(expiry__lte = one_month_later)
+    context={'expiring_items':expiring_items}
+    return render(request,'warehouses/expiry_check.html',context=context)
