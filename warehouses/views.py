@@ -38,7 +38,7 @@ def Category_detail(request,Category_id):
         warehouses = Category.objects.get(pk=Category_id)
     except Category.DoesNotExist:
         return HttpResponseNotFound()  
-    items = Item.objects.filter(Category = warehouses)
+    items = Item.objects.filter(Category = warehouses).order_by('quantity')
 
     #prepare data for chart
     labels = [item.name for item in items]
@@ -75,7 +75,7 @@ def Add_item(request,Category_id):
 
 def Item_chart(request):
     
-    items = Item.objects.all()
+    items = Item.objects.all().order_by('quantity')
     labels = [item.name for item in items] 
     quantities = [item.quantity for item in items]
 
@@ -124,6 +124,6 @@ def expiry_check(request):
     # Calculate the date one month from now
     one_month_later = now().date()+timedelta(days=30)
     # Filter items with expiry date less than one month away
-    expiring_items = Item.objects.filter(expiry__lte = one_month_later)
+    expiring_items = Item.objects.filter(expiry__lte = one_month_later).order_by('expiry')
     context={'expiring_items':expiring_items}
     return render(request,'warehouses/expiry_check.html',context=context)
