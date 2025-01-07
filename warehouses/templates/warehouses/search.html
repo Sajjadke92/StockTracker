@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Items</title>
+</head>
+<body>
+    <h1>Search for an Item</h1>
+    <form method="get" action="/warehouses/search/">
+        <input type="text" name="q" placeholder="Enter item name" value="{{query}}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if  query %}
+        <h2>Search Results for "{{query}}"</h2>
+        {% if results %}
+         <ul>
+            {%for item in results %}
+            <li>
+                <a href="/warehouses/search/{{item.id}}">{{item.name}}</a>
+            </li>
+            {% endfor %}
+         </ul>
+        {% else %}
+         <p>No items found matching your search.</p> 
+        {% endif %}
+    {% endif %}    
+    <a href="/"> Home </a><br>
+</body>
+</html>

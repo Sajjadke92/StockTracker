@@ -19,7 +19,7 @@ from django.urls import path
 
 
 
-from warehouses.views import home,Category_detail,Category_create,category_list_view,Add_item,Item_chart,delete_item,update_item,expiry_check
+from warehouses.views import home,Category_detail,Category_create,category_list_view,Add_item,Item_chart,delete_item,update_item,expiry_check, search, item_detail
 
 
 urlpatterns = [
@@ -33,4 +33,6 @@ urlpatterns = [
     path('warehouses/<int:Category_id>/delete_item/<int:Item_id>/',delete_item, name='delete_item'),
     path('warehouses/<int:Category_id>/update_item/<int:Item_id>/',update_item,name='update_item'),
     path('warehouses/expiry_check/',expiry_check,name='expiry_check'),
+    path('warehouses/search/',search, name='search'),
+    path('warehouses/search/<int:item_id>/',item_detail, name='item_detail'),
 ]

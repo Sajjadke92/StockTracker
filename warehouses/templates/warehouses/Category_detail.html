@@ -11,7 +11,7 @@
     <ul>
         {% for i in items %}
         <li>
-            <strong style="font-size: large;">{{i.name}}</strong>,  Quantity:{{i.quantity}},  Location:{{i.location}},  Exp:{{i.expiry}}
+            <strong style="font-size: large;"><a href="/warehouses/search/{{i.id}}">{{i.name}}</strong></a>,  Quantity:{{i.quantity}},  Location:{{i.location}},  Exp:{{i.expiry}}
             <a href="/warehouses/{{warehouses.id}}/update_item/{{i.id}}">Update</a>
             <a href="/warehouses/{{warehouses.id}}/delete_item/{{i.id}}">Delete</a>
         {% endfor %}

@@ -127,3 +127,15 @@ def expiry_check(request):
     expiring_items = Item.objects.filter(expiry__lte = one_month_later).order_by('expiry')
     context={'expiring_items':expiring_items}
     return render(request,'warehouses/expiry_check.html',context=context)
+
+def search(request):
+    query=request.GET.get('q') # Get the search query from the URL
+    results = []
+    if query:
+        # Perform a case-insensitive search on the 'name' field
+        results= Item.objects.filter(name__icontains=query)
+    return render(request,'warehouses/search.html',{'results': results,'query': query})
+
+def item_detail(request, item_id):
+    item = get_object_or_404(Item, pk=item_id)
+    return render(request, 'warehouses/item_detail.html', {'item': item})
