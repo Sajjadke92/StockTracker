@@ -7,10 +7,11 @@
 </head>
 <body>
     <h1>{{item.name}}</h1>
+    <p><strong>Category:</strong> {{ item.Category }}</p>
     <p><strong>Location:</strong> {{ item.location }}</p>
     <p><strong>Quantity:</strong> {{ item.quantity }}</p>
     <p><strong>Expiry Date:</strong> {{ item.expiry }}</p>
     <p><strong>Description:</strong> {{ item.description }}</p>
-    
+    <a href="/warehouses/{{item.Category.id}}/update_item/{{item.id}}">Update</a>
 </body>
 </html>

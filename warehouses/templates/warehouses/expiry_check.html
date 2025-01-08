@@ -7,6 +7,17 @@
 </head>
 <body>
     <h1>Items expiring within a Month</h1>
+    {% if expired_items %}
+      <ul>
+        {% for item in expired_items %}
+            <li>
+                <strong>{{ item.name }}</strong>: Expired
+            </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+        <p>No items have Expired</p>
+    {% endif %}
     {% if expiring_items %}
         <ul>
             {% for item in expiring_items %}
@@ -18,6 +29,6 @@
     {% else %}
         <p>No items are expiring within the next month.</p>
     {% endif %}
-    <a href="/warehouses/">Back to Warehouses</a>
+    <a href="/">Back</a>
 </body>
 </html>

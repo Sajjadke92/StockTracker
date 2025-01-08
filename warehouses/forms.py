@@ -9,13 +9,6 @@ class CategoryForm(forms.Form):
     description = forms.CharField(widget=forms.Textarea,required=False)
 
 
-# class ItemForm(forms.Form):
-#     name = forms.CharField()
-#     location = forms.CharField()
-#     quantity = forms.IntegerField()
-#     expiry = forms.DateField()
-#     description = forms.CharField(required=False)
-
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
@@ -30,3 +23,10 @@ class ItemForm(forms.ModelForm):
         if expiry_date < now().date():
             raise ValidationError("The expiry date cannot be in the past.")
         return expiry_date    
+    
+class ItemQuantityForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['id','name','quantity']
+
+    

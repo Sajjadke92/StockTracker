@@ -4,7 +4,8 @@ from django.core.mail import send_mail
 from django.utils.timezone import now
 from datetime import timedelta
 from .models import Category,Item
-from .forms import CategoryForm,ItemForm
+from django.forms import modelformset_factory
+from .forms import CategoryForm,ItemForm,ItemQuantityForm
 
 
 class GeneralView:
@@ -123,9 +124,11 @@ def send_notification(item):
 def expiry_check(request):
     # Calculate the date one month from now
     one_month_later = now().date()+timedelta(days=30)
+    today = now().date()
     # Filter items with expiry date less than one month away
-    expiring_items = Item.objects.filter(expiry__lte = one_month_later).order_by('expiry')
-    context={'expiring_items':expiring_items}
+    expiring_items = Item.objects.filter(expiry__lte = one_month_later, expiry__gt = today).order_by('expiry')
+    expired_items =Item.objects.filter(expiry__lte = now().date())
+    context={'expiring_items':expiring_items,'expired_items':expired_items}
     return render(request,'warehouses/expiry_check.html',context=context)
 
 def search(request):
@@ -139,3 +142,23 @@ def search(request):
 def item_detail(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     return render(request, 'warehouses/item_detail.html', {'item': item})
+
+
+def bulk_edit_quantities(request):
+    # Create a formset for Item model, editing only 'quantity'
+    ItemFormSet = modelformset_factory(Item, form=ItemQuantityForm, extra =0)
+    if request.method =='POST':
+        print(request.POST)
+        formset = ItemFormSet(request.POST)
+        if formset.is_valid():
+          updated_items=formset.save() #save changes
+          for item in updated_items:
+              if item.quantity < 5:
+                send_notification(item)
+          return redirect('bulk_edit_quantities')
+        else:
+           print("Formset is not valid:", formset.errors)
+    else:
+        formset = ItemFormSet(queryset = Item.objects.all())
+
+    return render(request, 'warehouses/bulk_edit_quantities.html',{'formset': formset})        
