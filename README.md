@@ -61,7 +61,7 @@ warehouse-management-system/
 
 ### Prerequisites
 - Python 3.8 or later
-- Django 4.0 or later
+- Django 5.1.4
 - A virtual environment (recommended)
 
 ### Steps
